@@ -6,44 +6,25 @@ $(document).ready(function () {
   try {
     var storeData = JSON.parse(window.localStorage.getItem("storeData"));
   } catch {
-    var storeData = [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-    ];
+    var storeData = [];
+    for (var i = 0; i < calendarLength; i++) {
+      storeData.push("");
+    }
   }
+  var calendarLength = 20;
 
   var updateTime = function () {
     displayDate = moment().format("LL");
     displayTime = moment().format("LTS");
     $("#currentDay").text(`${displayDate} ${displayTime}`);
   };
-
   updateTime();
   setInterval(updateTime, 1000);
 
   var clock = 0;
   var amPm = "";
 
-  for (var i = 9; i < 21; i++) {
+  for (var i = 9; i < calendarLength; i++) {
     if (i < 13) {
       clock = i;
       amPm = "am";
@@ -52,29 +33,10 @@ $(document).ready(function () {
       amPm = "pm";
     }
     if (!storeData) {
-      var storeData = [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-      ];
+      var storeData = [];
+      for (var j = 0; j < calendarLength; j++) {
+        storeData.push("");
+      }
     }
     $(".container").append(`<div class="row time-block">
     <h6 class="text-center col-1 p-0">${clock} ${amPm}</h6>
@@ -88,19 +50,19 @@ $(document).ready(function () {
     <button class="saveBtn col-1 p-0" id="${i}">Save</button>
   </div>
     `);
-  }
 
-  //For past time blocks
-  for (var p = 9; p < time; p++) {
-    $(`#t${p}`).attr("style", "background-color: #d3d3d3; color: white;");
-    // $(`#t${p}`).attr("readonly", "readonly");
+    //For past time blocks
+    if (i < time) {
+      $(`#t${i}`).attr("style", "background-color: #d3d3d3; color: white;");
+      // $(`#t${p}`).attr("readonly", "readonly");
+    }
+    //For future time blocks
+    if (i > time) {
+      $(`#t${i}`).attr("style", "background-color: #77dd77; color: white;");
+    }
+    //For current time blocks
+    $(`#t${time}`).attr("style", "background-color: #ff6961; color: white;");
   }
-  //For future time blocks
-  for (var f = 21; f > time; f--) {
-    $(`#t${f}`).attr("style", "background-color: #77dd77; color: white;");
-  }
-  //For current time blocks
-  $(`#t${time}`).attr("style", "background-color: #ff6961; color: white;");
 
   $(document).on("click", ".saveBtn", function () {
     var id = $(this).attr("id");
