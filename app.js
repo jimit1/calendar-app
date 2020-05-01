@@ -2,7 +2,7 @@ $(document).ready(function () {
   var time = moment().format("HH");
   var displayDate = "";
   var displayTime = "";
-  var calendarLength = 20;
+  var calendarLength = 19;
   try {
     var storeData = JSON.parse(window.localStorage.getItem("storeData"));
   } catch {
@@ -38,15 +38,15 @@ $(document).ready(function () {
       }
     }
     $(".container").append(`<div class="row time-block">
-    <h6 class="text-center col-1 p-0 border-top">${clock} ${amPm}</h6>
+    <h6 class="text-center col-1 p-0 pt-4 border-top">${clock} ${amPm}</h6>
     <textarea
-      class="text-center col-10 textInput"
+      class="col-10 textInput"
       name="${i}"
       id="t${i}"
       cols="100"
       rows="2"
     >${storeData[i]}</textarea>
-    <button class="saveBtn col-1 p-0" id="${i}">Save</button>
+    <button class="saveBtn col-1 p-0" id="${i}"><img src="./saveBtn.png"/></button>
   </div>
     `);
 
