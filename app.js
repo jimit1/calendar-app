@@ -2,7 +2,7 @@ $(document).ready(function () {
   var time = moment().format("HH");
   var displayDate = "";
   var displayTime = "";
-  $("#alert").hide();
+  var calendarLength = 20;
   try {
     var storeData = JSON.parse(window.localStorage.getItem("storeData"));
   } catch {
@@ -11,7 +11,6 @@ $(document).ready(function () {
       storeData.push("");
     }
   }
-  var calendarLength = 20;
 
   var updateTime = function () {
     displayDate = moment().format("LL");
@@ -39,7 +38,7 @@ $(document).ready(function () {
       }
     }
     $(".container").append(`<div class="row time-block">
-    <h6 class="text-center col-1 p-0">${clock} ${amPm}</h6>
+    <h6 class="text-center col-1 p-0 border-top">${clock} ${amPm}</h6>
     <textarea
       class="text-center col-10 textInput"
       name="${i}"
@@ -54,7 +53,7 @@ $(document).ready(function () {
     //For past time blocks
     if (i < time) {
       $(`#t${i}`).attr("style", "background-color: #d3d3d3; color: white;");
-      // $(`#t${p}`).attr("readonly", "readonly");
+      $(`#t${i}`).attr("readonly", "readonly");
     }
     //For future time blocks
     if (i > time) {
@@ -71,7 +70,7 @@ $(document).ready(function () {
     console.log(storeData);
     window.localStorage.setItem("storeData", JSON.stringify(storeData));
     if (storeData[id] === "") {
-      showAlert("You have removed an item", "danger");
+      showAlert("You have removed an item", "warning");
     }
     if (storeData[id] !== "") {
       showAlert("You have successully added an item", "success");
@@ -91,7 +90,7 @@ $(document).ready(function () {
   }
 
   $("#resetBtn").on("click", function () {
-    showAlert("You have successfully deleted all data", "success");
+    showAlert("You have successfully deleted all data", "danger");
     window.localStorage.removeItem("storeData");
     storeData = null;
     window.setTimeout(function () {
