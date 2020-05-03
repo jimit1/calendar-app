@@ -1,5 +1,6 @@
 $(document).ready(function () {
   var time = moment().format("HH");
+  var displayDay = "";
   var displayDate = "";
   var displayTime = "";
   var calendarLength = 19;
@@ -13,9 +14,10 @@ $(document).ready(function () {
   }
 
   var updateTime = function () {
+    displayDay = moment().format("dddd");
     displayDate = moment().format("LL");
     displayTime = moment().format("LTS");
-    $("#currentDay").text(`${displayDate} ${displayTime}`);
+    $("#currentDay").text(`${displayDay} ${displayDate} ${displayTime}`);
   };
   updateTime();
   setInterval(updateTime, 1000);
